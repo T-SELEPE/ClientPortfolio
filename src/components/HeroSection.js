@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { OrbitControls, useTexture, Html } from '@react-three/drei';
+import { OrbitControls, useTexture, Html, Text } from '@react-three/drei';
 import styled from 'styled-components';
 
 // Styled wrapper for the hero section
@@ -45,6 +45,25 @@ const BulbCanvas = styled.div`
   height: 100vh;
   z-index: 3;
   pointer-events: none;
+`;
+
+// Add this styled component for the overlay text
+const ReflectionText = styled.div`
+  position: absolute;
+  top: 28vh;
+  left: 0;
+  width: 100vw;
+  text-align: center;
+  pointer-events: none;
+  z-index: 4;
+  font-size: 2.2rem;
+  font-weight: bold;
+  color: #111;
+  font-family: 'Poppins', sans-serif;
+  text-shadow: 0 0 18px #fffbe6, 0 0 32px #fffbe6, 0 0 48px #fffbe6;
+  opacity: 0.92;
+  transition: left 0.2s, filter 0.2s;
+  will-change: left, filter;
 `;
 
 // 3D Lightbulb component
@@ -94,6 +113,7 @@ function LightBulb({ swing = true, onLightMove }) {
             transparent
           />
         </mesh>
+      
         {/* Bulb base */}
         <mesh position={[0, -0.32, 0]}>
           <cylinderGeometry args={[0.09, 0.11, 0.18, 16]} />
@@ -135,16 +155,28 @@ export default function HeroSection() {
     grad.addColorStop(0, 'rgba(255,250,220,0.95)');
     grad.addColorStop(0.18, 'rgba(255,250,220,0.7)');
     grad.addColorStop(0.32, 'rgba(255,250,220,0.25)');
-    grad.addColorStop(0.5, 'rgba(0,0,0,0.7)');
+    grad.addColorStop(0.5, 'rgba(76, 72, 72, 0.7)');
     grad.addColorStop(1, 'rgba(0,0,0,0.98)');
     ctx.fillStyle = grad;
     ctx.fillRect(0, 0, w, h);
   }, [lightX]);
 
+  // Calculate the horizontal position for the text based on lightX
+  const [windowWidth, setWindowWidth] = React.useState(window.innerWidth);
+  React.useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+  const textX = windowWidth * (0.18 + 0.64 * lightX) - windowWidth * 0.5;
+
   return (
     <HeroWrapper>
       <HeroImage src={process.env.PUBLIC_URL + '/thando5.jpg'} alt="Thando" />
       <LightingOverlay ref={overlayRef} />
+      <ReflectionText style={{ transform: `translateX(${textX}px)` }}>
+        I am Thando Mtungwa
+      </ReflectionText>
       <BulbCanvas>
         <Canvas
           shadows
