@@ -154,7 +154,7 @@ export default function HeroSection() {
     const grad = ctx.createRadialGradient(bulbX, bulbY, 60, bulbX, bulbY, 350);
     grad.addColorStop(0, 'rgba(255,250,220,0.95)');
     grad.addColorStop(0.18, 'rgba(255,250,220,0.7)');
-    grad.addColorStop(0.32, 'rgba(255,250,220,0.25)');
+
     grad.addColorStop(0.5, 'rgba(76, 72, 72, 0.7)');
     grad.addColorStop(1, 'rgba(0,0,0,0.98)');
     ctx.fillStyle = grad;
@@ -174,9 +174,7 @@ export default function HeroSection() {
     <HeroWrapper>
       <HeroImage src={process.env.PUBLIC_URL + '/thando5.jpg'} alt="Thando" />
       <LightingOverlay ref={overlayRef} />
-      <ReflectionText style={{ transform: `translateX(${textX}px)` }}>
-        I am Thando Mtungwa
-      </ReflectionText>
+     
       <BulbCanvas>
         <Canvas
           shadows
