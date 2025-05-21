@@ -153,9 +153,8 @@ export default function HeroSection() {
     const bulbY = h * 0.32;
     const grad = ctx.createRadialGradient(bulbX, bulbY, 60, bulbX, bulbY, 350);
     grad.addColorStop(0, 'rgba(255,250,220,0.95)');
-    grad.addColorStop(0.18, 'rgba(255,250,220,0.7)');
-
-    grad.addColorStop(0.5, 'rgba(76, 72, 72, 0.7)');
+    
+    grad.addColorStop(1, 'rgba(97, 93, 93, 0.7)');
     grad.addColorStop(1, 'rgba(0,0,0,0.98)');
     ctx.fillStyle = grad;
     ctx.fillRect(0, 0, w, h);
